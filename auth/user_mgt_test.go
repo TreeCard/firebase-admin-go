@@ -961,6 +961,21 @@ var updateUserCases = []struct {
 		(&UserToUpdate{}).CustomClaims(nil),
 		map[string]interface{}{"customAttributes": "{}"},
 	},
+
+	{
+		(&UserToUpdate{}).MultiFactor(MultiFactorSettings{EnrolledFactors: []*MultiFactorInfo{{FactorID: "phone", DisplayName: "phone", PhoneNumber: "+15555550001"}}}),
+		map[string]interface{}{
+			"multiFactor": map[string]interface{}{
+				"enrolledFactors": []map[string]string{
+					{
+						"displayName": "phone",
+						"factorId":    "phone",
+						"phoneNumber": "+15555550001",
+					},
+				},
+			},
+		},
+	},
 }
 
 func TestUpdateUser(t *testing.T) {

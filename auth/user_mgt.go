@@ -67,16 +67,16 @@ type multiFactorInfoResponse struct {
 
 // MultiFactorInfo describes a user enrolled second phone factor.
 type MultiFactorInfo struct {
-	UID                 string
-	DisplayName         string
-	EnrollmentTimestamp int64
-	FactorID            string
-	PhoneNumber         string
+	UID                 string `json:"uid,omitempty"`
+	DisplayName         string `json:"displayName,omitempty"`
+	EnrollmentTimestamp int64  `json:"enrollmentTimestamp,omitempty"`
+	FactorID            string `json:"factorId,omitempty"`
+	PhoneNumber         string `json:"phoneNumber,omitempty"`
 }
 
 // MultiFactorSettings describes the multi-factor related user settings.
 type MultiFactorSettings struct {
-	EnrolledFactors []*MultiFactorInfo
+	EnrolledFactors []*MultiFactorInfo `json:"enrolledFactors"`
 }
 
 // UserMetadata contains additional metadata associated with a user account.
@@ -239,6 +239,11 @@ func (u *UserToUpdate) PhoneNumber(phone string) *UserToUpdate {
 // PhotoURL setter. Set to empty string to remove the photo URL from the user account.
 func (u *UserToUpdate) PhotoURL(url string) *UserToUpdate {
 	return u.set("photoUrl", url)
+}
+
+// MultiFactor setter. Set to empty string to remove all multifactors from the user account.
+func (u *UserToUpdate) MultiFactor(multiFactorSettings MultiFactorSettings) *UserToUpdate {
+	return u.set("multiFactor", multiFactorSettings)
 }
 
 // ProviderToLink links this user to the specified provider.
